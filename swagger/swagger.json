@@ -1,0 +1,96 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "TwoLine API",
+        "description": "beego has a very cool tools to autogenerate documents for your API",
+        "version": "1.0.0",
+        "termsOfService": "http://www.amonster.net/",
+        "contact": {
+            "email": "apple@amonster.net"
+        }
+    },
+    "basePath": "/v1",
+    "paths": {
+        "/users/login": {
+            "get": {
+                "tags": [
+                    "users"
+                ],
+                "description": "Logs user into the system",
+                "operationId": "UserController.Login",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "phonenumber",
+                        "description": "手机号",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "$ref": "#/definitions/models.User"
+                        }
+                    },
+                    "400": {
+                        "description": "缺少参数"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.User": {
+            "title": "User",
+            "type": "object",
+            "properties": {
+                "avatarURL": {
+                    "type": "string"
+                },
+                "certificationTime": {
+                    "type": "string",
+                    "format": "datetime"
+                },
+                "createTime": {
+                    "type": "string",
+                    "format": "datetime"
+                },
+                "firstUploadAvatarTime": {
+                    "type": "string",
+                    "format": "datetime"
+                },
+                "id": {
+                    "type": "integer",
+                    "format": "int64"
+                },
+                "idCardAvatarURL": {
+                    "type": "string"
+                },
+                "idCardNo": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "phoneNumber": {
+                    "type": "string"
+                },
+                "updateTime": {
+                    "type": "string",
+                    "format": "datetime"
+                },
+                "yunxinID": {
+                    "type": "string"
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "users",
+            "description": "Operations about Users\n"
+        }
+    ]
+}
