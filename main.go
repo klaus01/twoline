@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/klaus01/twoline/controllers"
 	_ "github.com/klaus01/twoline/routers"
 
 	"github.com/astaxie/beego"
@@ -17,5 +18,6 @@ func main() {
 		beego.BConfig.WebConfig.DirectoryIndex = true
 		beego.BConfig.WebConfig.StaticDir["/swagger"] = "swagger"
 	}
+	beego.ErrorController(&controllers.ErrorController{})
 	beego.Run()
 }

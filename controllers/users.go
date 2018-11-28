@@ -65,7 +65,7 @@ func (u *UsersController) Logout() {
 // @Description 获取用户信息
 // @Param	uid		path 	string	true		"用户ID"
 // @Success 200 {object} models.User
-// @Failure 400 :uid 为空
+// @Failure 400 :uid 参数错误
 // @Failure 401 未登录或登录已过期
 // @Failure 404 :uid 不存在
 // @router /:uid [get]

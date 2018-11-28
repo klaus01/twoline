@@ -26,7 +26,7 @@ paths:
           schema:
             $ref: '#/definitions/models.User'
         "400":
-          description: :uid 为空
+          description: :uid 参数错误
         "401":
           description: 未登录或登录已过期
         "404":
