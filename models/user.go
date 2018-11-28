@@ -22,6 +22,9 @@ type User struct {
 	FirstUploadAvatarTime *time.Time `json:"firstUploadAvatarTime"`
 	CreateTime            time.Time  `json:"createTime" orm:"auto_now_add;type(datetime)"`
 	UpdateTime            time.Time  `json:"updateTime" orm:"auto_now;type(datetime)"`
+	IsFriend              bool       `json:"isFriend" orm:"column(is_friend)"`
+	IsSubscribed          bool       `json:"isSubscribed" orm:"column(is_subscribed)"`
+	SubscriptionCount     int64      `json:"subscriptionCount" orm:"column(subscription_count)"`
 }
 
 func (u *User) TableName() string {
@@ -39,4 +42,24 @@ func GetUserByPhoneNumber(phoneNumber string) (*User, error) {
 		return nil, err
 	}
 	return &user, nil
+}
+
+func GetUserByID(id int64, queryUserID int64) (*User, error) {
+	var user User
+	sql := `
+SELECT id, yunxin_id, phone_number, name, id_card_no, id_card_avatar_url, certification_time, avatar_url, first_upload_avatar_time, create_time, update_time, 
+	(SELECT id FROM friends WHERE user_id = ? AND friend_id = u.id) IS NOT NULL is_friend, 
+	(SELECT id FROM subscription WHERE user_id = ? AND subscription_user_id = u.id) IS NOT NULL is_subscribed, 
+	(SELECT COUNT(id) FROM subscription WHERE subscription_user_id = u.id) subscription_count 
+FROM users u 
+WHERE id = ?
+	`
+	err := orm.NewOrm().Raw(sql, queryUserID, queryUserID, id).QueryRow(&user)
+	if err == orm.ErrNoRows {
+		return nil, nil
+	} else if err != nil {
+		return nil, err
+	} else {
+		return &user, nil
+	}
 }

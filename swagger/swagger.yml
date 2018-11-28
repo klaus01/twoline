@@ -8,12 +8,35 @@ info:
     email: apple@amonster.net
 basePath: /v1
 paths:
-  /users/login:
+  /users/{uid}:
     get:
       tags:
       - users
-      description: Logs user into the system
-      operationId: UserController.Login
+      description: 获取用户信息
+      operationId: UsersController.Get
+      parameters:
+      - in: path
+        name: uid
+        description: 用户ID
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.User'
+        "400":
+          description: :uid 为空
+        "401":
+          description: 未登录或登录已过期
+        "404":
+          description: :uid 不存在
+  /users/login:
+    post:
+      tags:
+      - users
+      description: 登录或注册
+      operationId: UsersController.Login
       parameters:
       - in: query
         name: phonenumber
@@ -24,10 +47,29 @@ paths:
         "200":
           description: ""
           schema:
-            $ref: '#/definitions/models.User'
+            $ref: '#/definitions/controllers.LoginResponseJSON'
         "400":
           description: 缺少参数
+  /users/logout:
+    get:
+      tags:
+      - users
+      description: 退出登录，销毁 sessionID
+      operationId: UsersController.logout
+      responses:
+        "200":
+          description: '{nil} logout success'
+        "401":
+          description: 未登录或登录已过期
 definitions:
+  controllers.LoginResponseJSON:
+    title: LoginResponseJSON
+    type: object
+    properties:
+      isNewUser:
+        type: boolean
+      sessionID:
+        type: string
   models.User:
     title: User
     type: object
@@ -50,10 +92,17 @@ definitions:
         type: string
       idCardNo:
         type: string
+      isFriend:
+        type: boolean
+      isSubscribed:
+        type: boolean
       name:
         type: string
       phoneNumber:
         type: string
+      subscriptionCount:
+        type: integer
+        format: int64
       updateTime:
         type: string
         format: datetime
