@@ -164,7 +164,7 @@
     "tags": [
         {
             "name": "users",
-            "description": "Operations about Users\n"
+            "description": "UsersController 用户相关操作\n"
         }
     ]
 }

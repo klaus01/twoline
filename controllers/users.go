@@ -9,11 +9,12 @@ import (
 	"github.com/klaus01/twoline/services"
 )
 
-// Operations about Users
+// UsersController 用户相关操作
 type UsersController struct {
 	AppController
 }
 
+// LoginResponseJSON 登录接口响应数据
 type LoginResponseJSON struct {
 	SessionID string `json:"sessionID"`
 	IsNewUser bool   `json:"isNewUser"`

@@ -111,4 +111,4 @@ definitions:
 tags:
 - name: users
   description: |
-    Operations about Users
+    UsersController 用户相关操作
