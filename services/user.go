@@ -3,10 +3,9 @@ package services
 import (
 	"github.com/klaus01/twoline/models"
 	"github.com/klaus01/twoline/until"
-
-	"github.com/astaxie/beego/orm"
 )
 
+// Login 登录业务
 func Login(phoneNumber string) (*models.User, bool, error) {
 	user, err := models.GetUserByPhoneNumber(phoneNumber)
 	if err != nil {
@@ -22,8 +21,7 @@ func Login(phoneNumber string) (*models.User, bool, error) {
 	user.CreateTime = until.Now()
 	user.UpdateTime = until.Now()
 
-	o := orm.NewOrm()
-	id, err := o.Insert(user)
+	id, err := user.Insert()
 	if err != nil {
 		return nil, false, err
 	}

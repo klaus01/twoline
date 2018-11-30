@@ -2,7 +2,6 @@ package controllers
 
 import (
 	"net/http"
-	"strings"
 
 	"github.com/astaxie/beego"
 	"github.com/klaus01/twoline/models"
@@ -28,7 +27,7 @@ type LoginResponseJSON struct {
 // @Failure 400 缺少参数
 // @router /login [post]
 func (u *UsersController) Login() {
-	phonenumber := strings.TrimSpace(u.GetString("phonenumber"))
+	phonenumber := u.GetString("phonenumber")
 	if len(phonenumber) <= 0 {
 		u.ResultError(http.StatusBadRequest)
 		return
